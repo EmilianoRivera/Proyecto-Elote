@@ -38,11 +38,19 @@ public class InventarioController {
         return new ResponseEntity<>(nuevoInsumo, HttpStatus.CREATED);
     }
 
-    // PATCH: /api/v1/inventario/{id}/ajustar?cantidad=5
-    @PatchMapping("/{id}/ajustar")
-    public ResponseEntity<Inventario> ajustarStock(@PathVariable Integer id, @RequestParam int cantidad) {
-        Inventario insumoActualizado = inventarioService.actualizarStock(id, cantidad);
-        return ResponseEntity.ok(insumoActualizado);
+    @PatchMapping("/{id}/agregar")
+    public ResponseEntity<Inventario> agregarStock(@PathVariable Integer id, @RequestParam int cantidad) {
+        return ResponseEntity.ok(inventarioService.agregarStock(id, cantidad));
+    }
+
+    @PatchMapping("/{id}/descontar")
+    public ResponseEntity<Inventario> descontarStock(@PathVariable Integer id, @RequestParam int cantidad) {
+        return ResponseEntity.ok(inventarioService.descontarStock(id, cantidad));
+    }
+
+    @PutMapping("/{id}/corregir")
+    public ResponseEntity<Inventario> corregirStock(@PathVariable Integer id, @RequestParam int cantidadExacta) {
+        return ResponseEntity.ok(inventarioService.fijarStockManual(id, cantidadExacta));
     }
 
     // DELETE: /api/v1/inventario/{id}
