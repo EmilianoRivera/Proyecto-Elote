@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/platillos")
+@RequestMapping("/api/v1/platillos")
 public class PlatilloController {
 
     private final PlatilloService platilloService;

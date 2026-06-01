@@ -1,6 +1,7 @@
 package org.eskilokos.eskilokos.core.entidades;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -20,7 +21,7 @@ import java.util.Set;
 public class Pedido implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(name = "idPedido", nullable = false)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer idPedido;
 
@@ -52,7 +53,4 @@ public class Pedido implements Serializable {
     public Pedido(Integer idPedido){
         this.idPedido = idPedido;
     }
-
-
 }
-// idpedido, costo, idcliente, cocinero, idrepartidor, estadoatencion, estadoreparto
