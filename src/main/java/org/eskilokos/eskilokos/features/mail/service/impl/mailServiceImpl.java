@@ -19,8 +19,6 @@ public class mailServiceImpl implements mailService {
         this.mailSender = mailSender;
     }
 
-    // MODIFICADO: ahora lee el email real del cliente; lanza excepción si no tiene
-    // uno registrado
     private String resolverDestinatario(Pedido pedido) {
         if (pedido.getCliente() == null) {
             throw new RuntimeException("El pedido #" + pedido.getIdPedido() + " no tiene cliente asignado.");
@@ -66,7 +64,7 @@ public class mailServiceImpl implements mailService {
 
         mailSender.send(construirMensaje(
                 destinatario,
-                "✅ Pedido #" + pedido.getIdPedido() + " recibido",
+                "Pedido #" + pedido.getIdPedido() + " recibido",
                 cuerpo));
     }
 
@@ -96,7 +94,7 @@ public class mailServiceImpl implements mailService {
 
         mailSender.send(construirMensaje(
                 destinatario,
-                "🛵 Pedido #" + pedido.getIdPedido() + " en camino",
+                "Pedido #" + pedido.getIdPedido() + " en camino",
                 cuerpo));
     }
 
@@ -124,7 +122,7 @@ public class mailServiceImpl implements mailService {
 
         mailSender.send(construirMensaje(
                 destinatario,
-                "📦 Pedido #" + pedido.getIdPedido() + " entregado",
+                "Pedido #" + pedido.getIdPedido() + " entregado",
                 cuerpo));
     }
 }

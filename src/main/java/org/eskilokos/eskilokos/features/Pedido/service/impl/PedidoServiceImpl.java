@@ -90,13 +90,6 @@ public class PedidoServiceImpl implements PedidoService {
 
         Pedido actualizado = pedidoRepository.save(existing);
 
-        // NUEVO: se detecta la transición de estado y se dispara el correo
-        // correspondiente.
-        // Se usa el valor que viene en el body (pedido.getEstadoReparto()), no el del
-        // objeto
-        // guardado, porque getReference devuelve un proxy y getEstadoReparto podría no
-        // estar
-        // inicializado todavía en ese punto de la transacción.
         String nuevoEstadoReparto = pedido.getEstadoReparto();
         if ("En camino".equalsIgnoreCase(nuevoEstadoReparto)) {
             mailService.enviarPedidoEnCamino(actualizado);
