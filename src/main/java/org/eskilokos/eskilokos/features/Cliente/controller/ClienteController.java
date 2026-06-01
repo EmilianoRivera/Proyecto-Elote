@@ -36,13 +36,6 @@ public class ClienteController {
         return new ResponseEntity<>(nuevoCliente, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Cliente> actualizarCliente(
-            @PathVariable Integer id,
-            @RequestBody Cliente cliente) {
-        return ResponseEntity.ok(clienteService.actualizar(id, cliente));
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarCliente(@PathVariable Integer id) {
         clienteService.deleteById(id);

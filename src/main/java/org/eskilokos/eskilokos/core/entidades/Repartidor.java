@@ -5,13 +5,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "Repartidor")
@@ -39,4 +42,5 @@ public class Repartidor implements Serializable {
     public Repartidor(Integer idRepartidor){
         this.idRepartidor = idRepartidor;
     }
+
 }
