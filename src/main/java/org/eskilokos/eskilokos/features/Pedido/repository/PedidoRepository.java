@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
-    // Todos los pedidos de un cliente (relación Hacer)
     List<Pedido> findByCliente_IdCliente(Integer idCliente);
 }

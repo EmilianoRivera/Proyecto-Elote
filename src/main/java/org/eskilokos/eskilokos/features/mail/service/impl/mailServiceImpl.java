@@ -1,21 +1,21 @@
-package org.eskilokos.eskilokos.features.Mail.service.impl;
+package org.eskilokos.eskilokos.features.mail.service.impl;
 
 import org.eskilokos.eskilokos.core.entidades.Pedido;
-import org.eskilokos.eskilokos.features.Mail.service.MailService;
+import org.eskilokos.eskilokos.features.mail.service.mailService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MailServiceImpl implements MailService {
+public class mailServiceImpl implements mailService {
 
     private final JavaMailSender mailSender;
 
     @Value("${spring.mail.username}")
     private String remitente;
 
-    public MailServiceImpl(JavaMailSender mailSender) {
+    public mailServiceImpl(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
 

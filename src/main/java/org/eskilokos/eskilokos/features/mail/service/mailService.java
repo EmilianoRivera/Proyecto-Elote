@@ -1,8 +1,8 @@
-package org.eskilokos.eskilokos.features.Mail.service;
+package org.eskilokos.eskilokos.features.mail.service;
 
 import org.eskilokos.eskilokos.core.entidades.Pedido;
 
-public interface MailService {
+public interface mailService {
 
     // Dispara cuando el pedido se registra por primera vez
     void enviarConfirmacionPedido(Pedido pedido);

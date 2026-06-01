@@ -8,16 +8,22 @@ import java.util.Optional;
 
 public interface PedidoService {
     List<Pedido> findAll();
+
     Optional<Pedido> findById(Integer id);
+
     Pedido save(Pedido pedido);
+
     Pedido update(Integer id, Pedido pedido);
+
     void deleteById(Integer id);
 
     // Cliente (Hacer)
     List<Pedido> findByClienteId(Integer idCliente);
 
-    // Contenido (Contener) - cantidad de platillos en un pedido
+    // Contenido (Contener)
     Pedido agregarPlatillo(Integer idPedido, Integer idPlatillo, Integer cantidad);
+
     Pedido quitarPlatillo(Integer idPedido, Integer idPlatillo);
+
     List<PedidoContenido> getContenido(Integer idPedido);
 }
