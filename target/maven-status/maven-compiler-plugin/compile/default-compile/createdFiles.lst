@@ -1,0 +1,15 @@
+org\eskilokos\eskilokos\core\entidades\PlatilloInsumo.class
+org\eskilokos\eskilokos\core\entidades\Repartidor.class
+org\eskilokos\eskilokos\core\entidades\Pedido.class
+org\eskilokos\eskilokos\core\entidades\Empleado.class
+org\eskilokos\eskilokos\core\entidades\PedidoContenidoId.class
+org\eskilokos\eskilokos\core\entidades\EncargarId.class
+org\eskilokos\eskilokos\core\entidades\Cliente.class
+org\eskilokos\eskilokos\core\entidades\Cocinero.class
+org\eskilokos\eskilokos\core\entidades\Gerente.class
+org\eskilokos\eskilokos\core\entidades\Inventario.class
+org\eskilokos\eskilokos\core\entidades\Platillo.class
+org\eskilokos\eskilokos\core\entidades\Proveedor.class
+org\eskilokos\eskilokos\core\entidades\Encargar.class
+org\eskilokos\eskilokos\core\entidades\PlatilloInsumoId.class
+org\eskilokos\eskilokos\core\entidades\PedidoContenido.class
