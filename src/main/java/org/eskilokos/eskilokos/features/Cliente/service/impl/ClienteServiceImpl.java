@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class ClienteServiceImpl implements ClienteService{
+public class ClienteServiceImpl implements ClienteService {
     private final ClienteRepository clienteRepository;
 
     public ClienteServiceImpl(ClienteRepository clienteRepository) {
@@ -36,8 +36,21 @@ public class ClienteServiceImpl implements ClienteService{
     }
 
     @Override
+    @Transactional
+    public Cliente actualizar(Integer id, Cliente datos) {
+        Cliente existente = findById(id);
+        if (datos.getNombre() != null)
+            existente.setNombre(datos.getNombre());
+        if (datos.getTelefono() != null)
+            existente.setTelefono(datos.getTelefono());
+        if (datos.getEmail() != null)
+            existente.setEmail(datos.getEmail());
+        return clienteRepository.save(existente);
+    }
+
+    @Override
     public void deleteById(Integer id) {
-        if (!clienteRepository.existsById(id)){
+        if (!clienteRepository.existsById(id)) {
             throw new RuntimeException("No se puede Eliminar, No existe");
         }
         clienteRepository.deleteById(id);

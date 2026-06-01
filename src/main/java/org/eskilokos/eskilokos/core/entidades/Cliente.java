@@ -28,10 +28,14 @@ public class Cliente implements Serializable {
     @Column(nullable = false, length = 20)
     private String telefono;
 
+    @Column
+    private String email;
+
     @JsonIgnore
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private Set<Pedido> pedidos = new HashSet<>();
-    public Cliente(Integer idCliente){
+
+    public Cliente(Integer idCliente) {
         this.idCliente = idCliente;
     }
 }
