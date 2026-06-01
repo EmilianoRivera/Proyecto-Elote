@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.eskilokos.eskilokos.core.entidades.*;
 import org.eskilokos.eskilokos.features.Pedido.repository.PedidoRepository;
 import org.eskilokos.eskilokos.features.Pedido.service.PedidoService;
+import org.eskilokos.eskilokos.features.mail.service.mailService; // <-- Importación del servicio de correo
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,12 +17,15 @@ import java.util.Optional;
 public class PedidoServiceImpl implements PedidoService {
 
     private final PedidoRepository pedidoRepository;
+    private final mailService correoService; // <-- Inyección de dependencia
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    public PedidoServiceImpl(PedidoRepository pedidoRepository) {
+    // Actualizamos el constructor para recibir el mailService
+    public PedidoServiceImpl(PedidoRepository pedidoRepository, mailService correoService) {
         this.pedidoRepository = pedidoRepository;
+        this.correoService = correoService;
     }
 
     @Override
@@ -37,25 +41,53 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     @Transactional
     public Pedido save(Pedido pedido) {
-        // Solución al POST: Enlazamos correctamente todas las referencias existentes
-        if (pedido.getCliente() != null && pedido.getCliente().getIdCliente() != null) {
-            pedido.setCliente(entityManager.getReference(Cliente.class, pedido.getCliente().getIdCliente()));
+        // 1. Validaciones estrictas: Asegurarnos de que el JSON sí trajo los IDs
+        if (pedido.getCliente() == null || pedido.getCliente().getIdCliente() == null) {
+            throw new IllegalArgumentException("❌ ERROR: Falta el idCliente en el JSON.");
         }
-        if (pedido.getCocinero() != null && pedido.getCocinero().getIdCocinero() != null) {
-            pedido.setCocinero(entityManager.getReference(Cocinero.class, pedido.getCocinero().getIdCocinero()));
+        if (pedido.getCocinero() == null || pedido.getCocinero().getIdCocinero() == null) {
+            throw new IllegalArgumentException("❌ ERROR: Falta el idCocinero en el JSON.");
         }
-        if (pedido.getRepartidor() != null && pedido.getRepartidor().getIdRepartidor() != null) {
-            pedido.setRepartidor(entityManager.getReference(Repartidor.class, pedido.getRepartidor().getIdRepartidor()));
+        if (pedido.getRepartidor() == null || pedido.getRepartidor().getIdRepartidor() == null) {
+            throw new IllegalArgumentException("❌ ERROR: Falta el idRepartidor en el JSON.");
         }
 
-        return pedidoRepository.save(pedido);
+        // 2. Buscamos los objetos REALES en la base de datos
+        // Esto es VITAL para que el servicio de correos pueda leer el "email" real del cliente
+        Cliente clienteReal = entityManager.find(Cliente.class, pedido.getCliente().getIdCliente());
+        Cocinero cocineroReal = entityManager.find(Cocinero.class, pedido.getCocinero().getIdCocinero());
+        Repartidor repartidorReal = entityManager.find(Repartidor.class, pedido.getRepartidor().getIdRepartidor());
+
+        if (clienteReal == null) {
+            throw new RuntimeException("El cliente no existe en la base de datos.");
+        }
+
+        // 3. Se los asignamos al pedido
+        pedido.setCliente(clienteReal);
+        pedido.setCocinero(cocineroReal);
+        pedido.setRepartidor(repartidorReal);
+
+        // 4. Guardamos el pedido
+        Pedido pedidoGuardado = pedidoRepository.save(pedido);
+
+        // ✉️ MAGIA DE CORREO
+        try {
+            correoService.enviarConfirmacionPedido(pedidoGuardado);
+            System.out.println("✅ Correo de confirmación enviado exitosamente.");
+        } catch (Exception e) {
+            System.err.println("❌ No se pudo enviar el correo de confirmación: " + e.getMessage());
+        }
+
+        return pedidoGuardado;
     }
-
     @Override
     @Transactional
     public Pedido update(Integer id, Pedido pedido) {
         Pedido existing = pedidoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pedido no encontrado con id: " + id));
+
+        // 1. Guardamos el estado ANTERIOR para comparar
+        String estadoRepartoAnterior = existing.getEstadoReparto();
 
         existing.setCosto(pedido.getCosto());
         existing.setEstadoAtencion(pedido.getEstadoAtencion());
@@ -80,7 +112,26 @@ public class PedidoServiceImpl implements PedidoService {
             existing.setRepartidor(null);
         }
 
-        return pedidoRepository.save(existing);
+        Pedido pedidoActualizado = pedidoRepository.save(existing);
+
+        // ✉️ MAGIA DE CORREO: Evaluar si el estado cambió para notificar al cliente
+        try {
+            String estadoNuevo = pedidoActualizado.getEstadoReparto();
+
+            if (estadoNuevo != null && !estadoNuevo.equals(estadoRepartoAnterior)) {
+                if (estadoNuevo.equalsIgnoreCase("En camino")) {
+                    correoService.enviarPedidoEnCamino(pedidoActualizado);
+                    System.out.println("✅ Correo 'En Camino' enviado exitosamente.");
+                } else if (estadoNuevo.equalsIgnoreCase("Entregado")) {
+                    correoService.enviarPedidoEntregado(pedidoActualizado);
+                    System.out.println("✅ Correo 'Entregado' enviado exitosamente.");
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("❌ No se pudo enviar el correo de actualización: " + e.getMessage());
+        }
+
+        return pedidoActualizado;
     }
 
     @Override

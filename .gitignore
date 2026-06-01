@@ -34,3 +34,5 @@ build/
 
 ### Entorno ###
 .env
+
+root.crt
