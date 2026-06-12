@@ -1,13 +1,14 @@
 package org.eskilokos.eskilokos.core.entidades;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "Platillo_Insumos")
@@ -19,7 +20,8 @@ public class PlatilloInsumo implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("idPlatillo")
     @JoinColumn(name = "idPlatillo", referencedColumnName = "idPlatillo")
-    @JsonIgnore
+    @JsonIgnoreProperties("insumos")
+    @EqualsAndHashCode.Exclude
     private Platillo platillo;
 
     @ManyToOne(fetch = FetchType.EAGER)

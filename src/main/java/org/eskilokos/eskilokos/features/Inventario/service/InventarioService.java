@@ -5,9 +5,17 @@ import org.eskilokos.eskilokos.core.entidades.Inventario;
 import java.util.List;
 
 public interface InventarioService {
-    public List<Inventario> listaTodosLosInsumos(); //findAll
-    public Inventario findInsumoById(Integer id);
-    public Inventario registrarInsumo(Inventario insumo);
-    public Inventario actualizarStock(Integer id, int cantidadAjustada);
-    public void eliminarInsumo(Integer id);
+    List<Inventario> listaTodosLosInsumos();
+
+    Inventario findInsumoById(Integer id);
+
+    List<Inventario> buscarInsumosPorNombre(String nombre); // Nuevo contrato añadido
+
+    Inventario registrarInsumo(Inventario insumo);
+
+    Inventario actualizarStock(Integer id, int cantidadAjustada);
+
+    Inventario actualizarInsumoCompleto(Integer id, Inventario insumo); // Sorteamos soporte para PUT completo
+
+    void eliminarInsumo(Integer id);
 }
