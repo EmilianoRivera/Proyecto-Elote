@@ -1,12 +1,18 @@
 package org.eskilokos.eskilokos.features.Cliente.service;
 
 import org.eskilokos.eskilokos.core.entidades.Cliente;
-
 import java.util.List;
 
 public interface ClienteService {
-    public List<Cliente> findAll();
-    public Cliente findById(Integer id);
-    public Cliente save(Cliente cliente);
-    public void deleteById(Integer id);
+    List<Cliente> findAll();
+
+    Cliente findById(Integer id);
+
+    List<Cliente> buscarPorNombre(String nombre); // Nuevo contrato añadido
+
+    Cliente save(Cliente cliente);
+
+    Cliente update(Integer id, Cliente cliente); // Nuevo contrato añadido para actualización completa (PUT)
+
+    void deleteById(Integer id);
 }

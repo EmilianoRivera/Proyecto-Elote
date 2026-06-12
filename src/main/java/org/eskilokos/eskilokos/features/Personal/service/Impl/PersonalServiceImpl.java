@@ -30,8 +30,9 @@ public class PersonalServiceImpl implements PersonalService {
     }
 
     // ==========================================
-    // COCINEROS
+    // --- 🧑‍🍳 IMPLEMENTACIÓN COCINEROS ---
     // ==========================================
+
     @Override
     @Transactional(readOnly = true)
     public List<Cocinero> listarCocineros() {
@@ -39,9 +40,21 @@ public class PersonalServiceImpl implements PersonalService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Cocinero obtenerCocineroPorId(Integer id) {
+        return cocineroRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cocinero no encontrado con el ID: " + id));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Cocinero> buscarCocinerosPorNombre(String nombre) {
+        return cocineroRepository.findByEmpleado_NombreContainingIgnoreCase(nombre);
+    }
+
+    @Override
     @Transactional
     public Cocinero registrarCocinero(CocineroRequestDTO dto) {
-        // 1. Crear o buscar al Empleado
         Empleado empleado = empleadoRepository.findById(dto.rfc()).orElseGet(() -> {
             Empleado nuevoEmpleado = new Empleado(dto.rfc());
             nuevoEmpleado.setNombre(dto.nombre());
@@ -50,7 +63,6 @@ public class PersonalServiceImpl implements PersonalService {
             return empleadoRepository.save(nuevoEmpleado);
         });
 
-        // 2. Crear al Cocinero y asociarlo
         Cocinero cocinero = new Cocinero();
         cocinero.setEmpleado(empleado);
         cocinero.setNumCocineros(dto.numCocineros());
@@ -58,9 +70,33 @@ public class PersonalServiceImpl implements PersonalService {
         return cocineroRepository.save(cocinero);
     }
 
+    @Override
+    @Transactional
+    public Cocinero actualizarCocinero(Integer id, CocineroRequestDTO dto) {
+        Cocinero cocineroExistente = obtenerCocineroPorId(id);
+
+        Empleado empleado = cocineroExistente.getEmpleado();
+        empleado.setNombre(dto.nombre());
+        empleado.setEmail(dto.email());
+        empleado.setTelefono(dto.telefono());
+        empleadoRepository.save(empleado);
+
+        cocineroExistente.setNumCocineros(dto.numCocineros());
+
+        return cocineroRepository.save(cocineroExistente);
+    }
+
+    @Override
+    @Transactional
+    public void eliminarCocinero(Integer id) {
+        Cocinero cocinero = obtenerCocineroPorId(id);
+        cocineroRepository.delete(cocinero);
+    }
+
     // ==========================================
-    // REPARTIDORES
+    // --- 🛵 IMPLEMENTACIÓN REPARTIDORES ---
     // ==========================================
+
     @Override
     @Transactional(readOnly = true)
     public List<Repartidor> listarRepartidores() {
@@ -70,14 +106,25 @@ public class PersonalServiceImpl implements PersonalService {
     @Override
     @Transactional(readOnly = true)
     public List<Repartidor> listarRepartidoresDisponibles() {
-        // Devuelve a los que tienen al menos 1 entrega disponible
         return repartidorRepository.findByEntregasDispGreaterThan(0);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Repartidor obtenerRepartidorPorId(Integer id) {
+        return repartidorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Repartidor no encontrado con el ID: " + id));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Repartidor> buscarRepartidoresPorNombre(String nombre) {
+        return repartidorRepository.findByEmpleado_NombreContainingIgnoreCase(nombre);
     }
 
     @Override
     @Transactional
     public Repartidor registrarRepartidor(RepartidorRequestDTO dto) {
-        // 1. Crear o buscar al Empleado
         Empleado empleado = empleadoRepository.findById(dto.rfc()).orElseGet(() -> {
             Empleado nuevoEmpleado = new Empleado(dto.rfc());
             nuevoEmpleado.setNombre(dto.nombre());
@@ -86,12 +133,35 @@ public class PersonalServiceImpl implements PersonalService {
             return empleadoRepository.save(nuevoEmpleado);
         });
 
-        // 2. Crear al Repartidor y asociarlo
         Repartidor repartidor = new Repartidor();
         repartidor.setEmpleado(empleado);
         repartidor.setEntregasDisp(dto.entregasDisp());
         repartidor.setNumRepartidor(dto.numRepartidores());
 
         return repartidorRepository.save(repartidor);
+    }
+
+    @Override
+    @Transactional
+    public Repartidor actualizarRepartidor(Integer id, RepartidorRequestDTO dto) {
+        Repartidor repartidorExistente = obtenerRepartidorPorId(id);
+
+        Empleado empleado = repartidorExistente.getEmpleado();
+        empleado.setNombre(dto.nombre());
+        empleado.setEmail(dto.email());
+        empleado.setTelefono(dto.telefono());
+        empleadoRepository.save(empleado);
+
+        repartidorExistente.setEntregasDisp(dto.entregasDisp());
+        repartidorExistente.setNumRepartidor(dto.numRepartidores());
+
+        return repartidorRepository.save(repartidorExistente);
+    }
+
+    @Override
+    @Transactional
+    public void eliminarRepartidor(Integer id) {
+        Repartidor repartidor = obtenerRepartidorPorId(id);
+        repartidorRepository.delete(repartidor);
     }
 }

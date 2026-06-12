@@ -3,14 +3,14 @@ package org.eskilokos.eskilokos.features.Cliente.service.impl;
 import org.eskilokos.eskilokos.core.entidades.Cliente;
 import org.eskilokos.eskilokos.features.Cliente.repository.ClienteRepository;
 import org.eskilokos.eskilokos.features.Cliente.service.ClienteService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-public class ClienteServiceImpl implements ClienteService{
+public class ClienteServiceImpl implements ClienteService {
+
     private final ClienteRepository clienteRepository;
 
     public ClienteServiceImpl(ClienteRepository clienteRepository) {
@@ -26,7 +26,14 @@ public class ClienteServiceImpl implements ClienteService{
     @Override
     @Transactional(readOnly = true)
     public Cliente findById(Integer id) {
-        return clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente No Econtrado"));
+        return clienteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente No Encontrado"));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Cliente> buscarPorNombre(String nombre) {
+        return clienteRepository.findByNombreContainingIgnoreCase(nombre);
     }
 
     @Override
@@ -36,8 +43,22 @@ public class ClienteServiceImpl implements ClienteService{
     }
 
     @Override
+    @Transactional
+    public Cliente update(Integer id, Cliente datosNuevos) {
+        Cliente clienteExistente = findById(id);
+
+        // Sincronizamos las propiedades editables del cliente
+        clienteExistente.setNombre(datosNuevos.getNombre());
+        clienteExistente.setEmail(datosNuevos.getEmail());
+        clienteExistente.setTelefono(datosNuevos.getTelefono());
+
+        return clienteRepository.save(clienteExistente);
+    }
+
+    @Override
+    @Transactional
     public void deleteById(Integer id) {
-        if (!clienteRepository.existsById(id)){
+        if (!clienteRepository.existsById(id)) {
             throw new RuntimeException("No se puede Eliminar, No existe");
         }
         clienteRepository.deleteById(id);

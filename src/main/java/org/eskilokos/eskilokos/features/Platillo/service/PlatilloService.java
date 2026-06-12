@@ -13,6 +13,8 @@ public interface PlatilloService {
     Platillo update(Integer id, Platillo platillo);
     void deleteById(Integer id);
 
+    List<Platillo> findByNombre(String nombre);
+
     // Inventario (Necesitar): insumos que necesita un platillo
     List<PlatilloInsumo> getInsumos(Integer idPlatillo);
     Platillo agregarInsumo(Integer idPlatillo, Integer idInsumo, Integer cantidadNecesaria);

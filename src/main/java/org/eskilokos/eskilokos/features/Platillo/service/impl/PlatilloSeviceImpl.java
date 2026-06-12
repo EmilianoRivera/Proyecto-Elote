@@ -51,6 +51,13 @@ public class PlatilloSeviceImpl implements PlatilloService {
         platilloRepository.deleteById(id);
     }
 
+
+    @Override
+    public List<Platillo> findByNombre(String nombre) {
+        return platilloRepository.findByNombreContainingIgnoreCase(nombre);
+    }
+
+
     // --- Inventario (Necesitar) ---
     @Override
     public List<PlatilloInsumo> getInsumos(Integer idPlatillo) {
