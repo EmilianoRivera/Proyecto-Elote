@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: org.eskilokos.eskilokos.EskilokosApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.020 s -- in org.eskilokos.eskilokos.EskilokosApplicationTests
