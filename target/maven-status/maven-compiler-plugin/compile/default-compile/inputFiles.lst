@@ -3,6 +3,7 @@ C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\core\entidades\Empleado.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\core\entidades\Encargar.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\core\entidades\EncargarId.java
+C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\core\entidades\EstadoPedido.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\core\entidades\Gerente.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\core\entidades\Inventario.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\core\entidades\Pedido.java
@@ -22,9 +23,13 @@ C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Inventario\repository\InventarioRepository.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Inventario\service\impl\InventarioServiceImpl.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Inventario\service\InventarioService.java
-C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\mail\service\impl\mailServiceImpl.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\mail\service\mailService.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Pedido\controller\PedidoController.java
+C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Pedido\DTOs\PedidoContenidoRequestDTO.java
+C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Pedido\DTOs\PedidoContenidoUpdateDTO.java
+C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Pedido\DTOs\PedidoRequestDTO.java
+C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Pedido\DTOs\PedidoUpdateDTO.java
+C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Pedido\repository\PedidoContenidoRepository.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Pedido\repository\PedidoRepository.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Pedido\service\impl\PedidoServiceImpl.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Pedido\service\PedidoService.java
@@ -37,6 +42,7 @@ C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Personal\service\Impl\PersonalServiceImpl.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Personal\service\PersonalService.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Platillo\controller\PlatilloController.java
+C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Platillo\DTOs\PlatilloInsumoRequestDTO.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Platillo\repository\PlatilloRepository.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Platillo\service\impl\PlatilloSeviceImpl.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Platillo\service\PlatilloService.java
@@ -48,3 +54,4 @@ C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Ticket\dto\TicketDTO.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Ticket\service\Impl\TicketServiceImpl.java
 C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\features\Ticket\service\TicketService.java
+C:\Users\arebo\OneDrive - Instituto Politecnico Nacional\Desktop\Proyecto-Elote\src\main\java\org\eskilokos\eskilokos\SwaggerConfig.java
