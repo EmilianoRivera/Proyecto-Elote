@@ -7,6 +7,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import jakarta.mail.internet.MimeMessage;
 
+import java.math.BigDecimal; // <-- Necesario para evaluar tu costo
+
 @Service
 public class mailService {
 
@@ -53,6 +55,15 @@ public class mailService {
                 }
             }
 
+            // 🌟 EL TRUCO: Si el costo es 0, no mostramos $0. Mostramos un texto de espera.
+            String costoAmostrar;
+            if (pedido.getCosto() == null || pedido.getCosto().compareTo(BigDecimal.ZERO) == 0) {
+                costoAmostrar = "Calculando platillos... ⏳";
+            } else {
+                costoAmostrar = "$" + pedido.getCosto();
+            }
+
+            // Quitamos el signo de $ duro en el HTML y metemos el string dinámico
             String htmlContent = """
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 20px; border-radius: 8px;">
                     <h2 style="color: #e67e22; text-align: center;">%s</h2>
@@ -61,17 +72,23 @@ public class mailService {
                     <p>%s</p>
                     <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0;">
                         <p style="margin: 5px 0;"><strong>Número de pedido:</strong> #%d</p>
-                        <p style="margin: 5px 0;"><strong>Total de la compra:</strong> $%s</p>
+                        <p style="margin: 5px 0;"><strong>Total de la compra:</strong> %s</p>
                         <p style="margin: 5px 0;"><strong>Estatus:</strong> <span style="background-color: #e67e22; color: white; padding: 2px 8px; border-radius: 3px;">%s</span></p>
                     </div>
                     <p style="text-align: center; color: #777;">— Eskilokos Restaurant</p>
                 </div>
-                """.formatted(tituloHtml, pedido.getCliente().getNombre(), mensajeCuerpo, pedido.getIdPedido(), pedido.getCosto(), pedido.getEstadoReparto());
+                """.formatted(
+                    tituloHtml,
+                    pedido.getCliente().getNombre(),
+                    mensajeCuerpo,
+                    pedido.getIdPedido(),
+                    costoAmostrar, // Pasamos la variable que definimos arriba
+                    pedido.getEstadoReparto()
+            );
 
             helper.setSubject(asunto);
             helper.setText(htmlContent, true);
 
-            // LINEA CORREGIDA: Solo se envía, no lleva un 'return' antes
             mailSender.send(message);
 
         } catch (Exception e) {
