@@ -1,5 +1,42 @@
+### Java Compilado ###
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar.gz
+*.rar
 
-### STS ###
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+### Logs del Sistema (Logback) ###
+logs/
+*.log
+
+### Seguridad y Credenciales ###
+.env
+root.crt
+# Ignorar propiedades de produccion si en el futuro las separas
+application-prod.properties 
+application-secret.properties
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### STS / Eclipse ###
 .apt_generated
 .classpath
 .factorypath
@@ -7,12 +44,12 @@
 .settings
 .springBeans
 .sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+### VS Code ###
+.vscode/
 
 ### NetBeans ###
 /nbproject/private/
@@ -24,10 +61,6 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
-.vscode/
-
-### Entorno ###
-.env
-
-root.crt
+### Sistema Operativo (Basura de Windows y Mac) ###
+.DS_Store
+Thumbs.db
